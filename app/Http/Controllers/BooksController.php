@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
+use App\Models\Book;
 use Illuminate\Http\Request;
-use App\Http\Resources\AuthorsResource;
-use App\Http\Requests\AuthorsRequest;
+use App\Http\Resources\BooksResource;
 
-class AuthorsController extends Controller
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        return AuthorsResource::collection(Author::all());
+        return BooksResource::collection(Book::all());
     }
 
     /**
@@ -26,7 +25,7 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        //
+      
     }
 
     /**
@@ -38,31 +37,34 @@ class AuthorsController extends Controller
     public function store(Request $request)
     {
         $faker = \Faker\Factory::create(1);
-        $author = Author::create([
-            'name' => $faker->name
+        $book = Book::create([
+            'name' => $faker->name,
+            'description' => $faker->sentence,
+            'publication_year' => $faker->year
         ]);
 
-        return new AuthorsResource($author);
+        return new BooksResource($book);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Author $author)
+    public function show(Book $book)
     {
-        return new AuthorsResource($author);
+        return new BooksResource($book);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function edit(Author $author)
+    public function edit(Book $book)
     {
         //
     }
@@ -71,27 +73,28 @@ class AuthorsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(AuthorsRequest $request, Author $author)
+    public function update(Request $request, Book $book)
     {
-        $author -> update([
-           // 'name' => 'Maya1'
-            'name' => $request->input('name')
+        $book->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'publication_year' => $request->input('publication_year')
         ]);
-        return new AuthorsResource($author);
+            return new BooksResource($book);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Author $author)
+    public function destroy(Book $book)
     {
-        $author->delete();
+        $book->delete();
 
         return response(null, 204);
     }

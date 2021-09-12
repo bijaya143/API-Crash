@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\HTTP\Controllers\AuthorsController;
+use App\Http\Controllers\BooksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::middleware('auth:api')->prefix('v1')->group(function(){
     });
     //all methods from single controller
     Route::apiResource('/authors', AuthorsController::class);
+    Route::apiResource('/books', BooksController::class);
 
 
     // Route::get('/authors/{author}', [AuthorsController::class, 'show']);
